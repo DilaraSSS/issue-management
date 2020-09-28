@@ -3,12 +3,14 @@ package com.arge.issuemanagement.api;
 import com.arge.issuemanagement.dto.ProjectDto;
 import com.arge.issuemanagement.service.impl.ProjectServiceImpl;
 import com.arge.issuemanagement.util.ApiPaths;
+import com.arge.issuemanagement.util.TPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,6 +61,16 @@ public class ProjectController {
     @ApiResponse(responseCode = "200", description = "Updated the Project", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProjectDto.class))})
     public ResponseEntity<ProjectDto> updateProject(@PathVariable("id") Long id, @Valid @RequestBody ProjectDto project) {
         return ResponseEntity.ok(projectServiceImpl.update(id, project));
+    }
+
+    @GetMapping(ApiPaths.Methods.GET_BY_PAGEABLE)
+    @Operation(summary = "Get All Pageable Operation")
+    //@ApiResponses(value = {
+    //        @ApiResponse(responseCode = "200", description = "Found the Pageable Projects", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = TPage<ProjectDto>.class))}),
+    //       @ApiResponse(responseCode = "404", description = "Pageable Projects not found", content = @Content)})
+    public ResponseEntity<TPage<ProjectDto>> getAllPageable(Pageable pageable) {
+        TPage<ProjectDto> data = projectServiceImpl.getAllPageable(pageable);
+        return ResponseEntity.ok(data);
     }
 
     @DeleteMapping(ApiPaths.Methods.DELETE + "{id}")

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * Created by dilara.akbas on Sep, 2020
@@ -30,15 +31,19 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public IssueDto save(IssueDto issue) {
-            if (issue.getDate() == null) {
-                throw new IllegalArgumentException("Issue date cannot be empty!");
-            }
-            Issue issueMapped = modelMapper.map(issue, Issue.class);
-            return modelMapper.map(issueRepository.save(issueMapped), IssueDto.class);
+
+        if (issue.getDate() == null) {
+            throw new IllegalArgumentException("Issue Date Cannot Be Empty!");
+        }
+        Issue issueMapped = modelMapper.map(issue, Issue.class);
+        return modelMapper.map(issueRepository.save(issueMapped), IssueDto.class);
     }
 
     @Override
     public IssueDto getById(Long id) {
+
+        if (issueRepository.findById(id).equals(Optional.empty()))
+            throw new IllegalArgumentException("Issue Does Not Exist with ID: " + id);
 
         return modelMapper.map(issueRepository.getOne(id), IssueDto.class);
     }
@@ -54,6 +59,10 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public Boolean delete(IssueDto issue) {
+
+        if (issueRepository.findById(issue.getId()).equals(Optional.empty()))
+            throw new IllegalArgumentException("Issue Does Not Exist with ID: " + issue.getId());
+
         issueRepository.delete(modelMapper.map(issue, Issue.class));
         return Boolean.TRUE;
     }
@@ -71,6 +80,10 @@ public class IssueServiceImpl implements IssueService {
     }
 
     public Boolean delete(Long id) {
+
+        if (issueRepository.findById(id).equals(Optional.empty()))
+            throw new IllegalArgumentException("Issue Does Not Exist with ID: " + id);
+
         issueRepository.deleteById(id);
         return true;
     }

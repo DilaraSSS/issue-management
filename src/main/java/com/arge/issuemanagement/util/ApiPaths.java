@@ -21,5 +21,6 @@ public final class ApiPaths {
         public static final String UPDATE = "/update/";
         public static final String DELETE = "/delete/";
         public static final String GET_BY_PROJECT_CODE = "/getByProjectCode/";
+        public static final String GET_BY_PAGEABLE = "/getAllPagable";
     }
 }

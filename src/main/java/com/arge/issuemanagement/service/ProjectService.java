@@ -1,6 +1,7 @@
 package com.arge.issuemanagement.service;
 
 import com.arge.issuemanagement.dto.ProjectDto;
+import com.arge.issuemanagement.util.TPage;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,7 +20,7 @@ public interface ProjectService {
 
     List<ProjectDto> getByProjectCodeContains(String projectCode);
 
-    Page<ProjectDto> getAllPageable(Pageable pageable);
+    TPage<ProjectDto> getAllPageable(Pageable pageable);
 
     Boolean delete(ProjectDto projectDto);
 

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by dilara.akbas on Sep, 2020
@@ -24,5 +25,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     List<Project> findAll(Sort sort);
 
     Project getByProjectCodeAndIdNot(String projectCode, Long id);
+
+    Optional<Project> findByProjectCode(String projectCode);
 
 }

@@ -1,5 +1,6 @@
 package com.arge.issuemanagement.util;
 
+import lombok.Data;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 
@@ -8,6 +9,7 @@ import java.util.List;
 /**
  * Created by dilara.akbas on Sep, 2020
  */
+@Data
 public class TPage<T> {
 
     private int number;
@@ -22,6 +24,7 @@ public class TPage<T> {
         this.size = page.getSize();
         this.sort = page.getSort();
         this.totalPages = page.getTotalPages();
+        this.totalElements = page.getTotalElements();
         this.content = list;
     }
 
